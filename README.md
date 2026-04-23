@@ -14,10 +14,10 @@ princiapl= scanner.nextDouble();
 System.out.print("Enter the interest rate (in %): ");
 rate= scanner.nextDouble() /100;
 
-System.out.print("Enter the # of times compounded per year: ");
+System.out.print("Enter the no. of times compounded per year: ");
 timesCompounded = scanner.nextInt();
 
-Ssytem.out.print("Enter the # of years: ");
+Ssytem.out.print("Enter the no. of years: ");
 years = scanner.nextInt();
 
 amount = principal*Math.pow(1 + rate / timesCompounded , timesCompunded*years);

@@ -1,0 +1,110 @@
+import java.util.*;
+import java.io.*;
+
+// Abstract Class
+abstract class Person {
+    int id;
+
+
+    String name;
+
+    Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    abstract void display();
+}
+
+// Student Class
+class Student extends Person {
+    int marks;
+
+    Student(int id, String name, int marks) {
+        super(id, name);
+        this.marks = marks;
+    }
+
+    void display() {
+        System.out.println("Student ID: " + id +
+                " Name: " + name +
+                " Marks: " + marks);
+    }
+}
+
+// Teacher Class
+class Teacher extends Person {
+
+    Teacher(int id, String name) {
+        super(id, name);
+    }
+
+    void display() {
+        System.out.println("Teacher ID: " + id +
+                " Name: " + name);
+    }
+}
+
+// Interface
+interface Gradeable {
+    void calculateGrade();
+}
+
+// Result Class
+class Result implements Gradeable {
+    int marks;
+
+    Result(int marks) {
+        this.marks = marks;
+    }
+
+    public void calculateGrade() {
+        if(marks >= 75)
+            System.out.println("Grade A");
+        else if(marks >= 50)
+            System.out.println("Grade B");
+        else
+            System.out.println("Fail - ReExam");
+    }
+}
+
+public class StudentResultManagement {
+
+    public static <T> void show(T obj) {
+        System.out.println(obj);
+    }
+
+    public static void main(String args[]) {
+
+        Student s1 =
+            new Student(101, "Aryan", 82);
+
+        Teacher t1 =
+            new Teacher(201, "Sharma Sir");
+
+        s1.display();
+        t1.display();
+
+        try {
+            if(s1.marks > 100)
+                throw new Exception("Invalid Marks");
+
+            Result r =
+                new Result(s1.marks);
+
+            r.calculateGrade();
+
+            FileWriter fw =
+                new FileWriter("result.txt");
+
+            fw.write("Aryan Marks: 82 Grade A");
+            fw.close();
+
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+
+        show("Result Saved Successfully");
+    }
+}
+

@@ -1,0 +1,113 @@
+import java.util.*;
+import java.io.*;
+
+// Abstract Class
+abstract class User {
+    int id;
+    String name;
+
+    User(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    abstract void display();
+}
+
+// Customer Class
+class Customer extends User {
+
+    Customer(int id, String name) {
+        super(id, name);
+    }
+
+    void display() {
+        System.out.println("Customer ID: " + id +
+                " Name: " + name);
+    }
+}
+
+// Premium Customer
+class PremiumCustomer extends Customer {
+
+    PremiumCustomer(int id, String name) {
+        super(id, name);
+    }
+
+    void display() {
+        System.out.println("Premium Customer ID: " + id +
+                " Name: " + name);
+    }
+}
+
+// Product Class
+class Product {
+    int pid;
+    String pname;
+    double price;
+
+    Product(int pid, String pname, double price) {
+        this.pid = pid;
+        this.pname = pname;
+        this.price = price;
+    }
+
+    void display() {
+        System.out.println("Product: " + pname +
+                " Price: Rs." + price);
+    }
+}
+
+// Interface
+interface Payable {
+    void pay();
+}
+
+// Payment Class
+class Payment implements Payable {
+    double amount;
+
+    Payment(double amount) {
+        this.amount = amount;
+    }
+
+    public void pay() {
+        System.out.println("Payment Done: Rs." + amount);
+    }
+}
+
+public class ShoppingManagement {
+
+    public static <T> void show(T data) {
+        System.out.println(data);
+    }
+
+    public static void main(String args[]) {
+
+        PremiumCustomer c1 =
+            new PremiumCustomer(101, "Aryan");
+
+        Product p1 =
+            new Product(1, "Laptop", 55000);
+
+        c1.display();
+        p1.display();
+
+        try {
+            Payment pay = new Payment(50000);
+            pay.pay();
+
+            FileWriter fw =
+                new FileWriter("order.txt");
+
+            fw.write("Aryan purchased Laptop");
+            fw.close();
+
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+
+        show("Order Saved Successfully");
+    }
+}
+

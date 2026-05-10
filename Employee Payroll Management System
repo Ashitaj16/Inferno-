@@ -1,0 +1,106 @@
+import java.util.*;
+import java.io.*;
+
+// Abstract Class
+abstract class Person {
+    int id;
+    String name;
+
+    Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    abstract void display();
+}
+
+// Employee Class
+class Employee extends Person {
+    int daysPresent;
+    double basicSalary;
+
+    Employee(int id, String name, int daysPresent, double basicSalary) {
+        super(id, name);
+        this.daysPresent = daysPresent;
+        this.basicSalary = basicSalary;
+    }
+
+    void display() {
+        System.out.println("Employee ID: " + id +
+                " Name: " + name);
+    }
+}
+
+// Manager Class
+class Manager extends Employee {
+
+    Manager(int id, String name, int daysPresent, double basicSalary) {
+        super(id, name, daysPresent, basicSalary);
+    }
+
+    void display() {
+        System.out.println("Manager ID: " + id +
+                " Name: " + name);
+    }
+}
+
+// Interface
+interface Salaryable {
+    void calculateSalary();
+}
+
+// Payroll Class
+class Payroll implements Salaryable {
+    Employee emp;
+
+    Payroll(Employee emp) {
+        this.emp = emp;
+    }
+
+    public void calculateSalary() {
+        double salary =
+            (emp.basicSalary / 30) * emp.daysPresent;
+
+        System.out.println("Salary = Rs." + salary);
+    }
+}
+
+public class PayrollManagement {
+
+    public static <T> void show(T obj) {
+        System.out.println(obj);
+    }
+
+    public static void main(String args[]) {
+
+        Employee e1 =
+            new Employee(101, "Aryan", 26, 30000);
+
+        Manager m1 =
+            new Manager(201, "Sharma", 28, 50000);
+
+        e1.display();
+        m1.display();
+
+        try {
+            if(e1.daysPresent > 30)
+                throw new Exception("Invalid Attendance");
+
+            Payroll p =
+                new Payroll(e1);
+
+            p.calculateSalary();
+
+            FileWriter fw =
+                new FileWriter("salary.txt");
+
+            fw.write("Aryan Salary Generated");
+            fw.close();
+
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+
+        show("Payroll Saved Successfully");
+    }
+}

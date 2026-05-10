@@ -1,0 +1,112 @@
+import java.util.*;
+
+// Book Class
+class Book {
+    int id;
+    String title;
+    String author;
+
+    Book(int id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+    }
+
+    public String toString() {
+        return id + " " + title + " " + author;
+    }
+}
+
+// Abstract Class
+abstract class Member {
+    int id;
+    String name;
+
+    Member(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    abstract double calcFine(int days);
+}
+
+// Student Class
+class Student extends Member {
+
+    Student(int id, String name) {
+        super(id, name);
+    }
+
+    double calcFine(int days) {
+        return days * 2;
+    }
+}
+
+// Faculty Class
+class Faculty extends Member {
+
+    Faculty(int id, String name) {
+        super(id, name);
+    }
+
+    double calcFine(int days) {
+        return days * 1;
+    }
+}
+
+// Interface
+interface LibraryRules {
+    void borrowBook();
+}
+
+// Library Class
+class Library implements LibraryRules {
+
+    ArrayList<Book> books = new ArrayList<>();
+
+    public void addBook(Book b) {
+        books.add(b);
+    }
+
+    public void borrowBook() {
+        System.out.println("Book Borrowed Successfully");
+    }
+
+    public void showBooks() {
+        for(Book b : books)
+            System.out.println(b);
+    }
+}
+
+// Main Class
+public class Main {
+
+    // Generic Method
+    public static <T> void show(T msg) {
+        System.out.println(msg);
+    }
+
+    public static void main(String[] args) {
+
+        try {
+
+            Library lib = new Library();
+
+            lib.addBook(new Book(1,"Java","James"));
+            lib.addBook(new Book(2,"Python","Guido"));
+
+            lib.showBooks();
+
+            Member m1 = new Student(101,"Aryan");
+            Member m2 = new Faculty(102,"Rahul");
+
+            lib.borrowBook();
+
+            show("Student Fine = " + m1.calcFine(5));
+            show("Faculty Fine = " + m2.calcFine(5));
+
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+}

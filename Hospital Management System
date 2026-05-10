@@ -1,0 +1,109 @@
+import java.util.*;
+import java.io.*;
+
+// Abstract Class
+abstract class Person {
+    int id;
+    String name;
+
+    Person(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    abstract void display();
+}
+
+// Patient Class
+class Patient extends Person {
+    String disease;
+
+    Patient(int id, String name, String disease) {
+        super(id, name);
+        this.disease = disease;
+    }
+
+    void display() {
+        System.out.println("Patient ID: " + id +
+                " Name: " + name +
+                " Disease: " + disease);
+    }
+}
+
+// Staff Class
+class Staff extends Person {
+    String department;
+
+    Staff(int id, String name, String department) {
+        super(id, name);
+        this.department = department;
+    }
+
+    void display() {
+        System.out.println("Staff ID: " + id +
+                " Name: " + name +
+                " Dept: " + department);
+    }
+}
+
+// Doctor Class
+class Doctor extends Staff {
+
+    Doctor(int id, String name, String department) {
+        super(id, name, department);
+    }
+
+    void display() {
+        System.out.println("Doctor ID: " + id +
+                " Name: " + name +
+                " Specialization: " + department);
+    }
+}
+
+// Interface
+interface Billable {
+    void generateBill();
+}
+
+// Bill Class
+class Bill implements Billable {
+    double amount;
+
+    Bill(double amount) {
+        this.amount = amount;
+    }
+
+    public void generateBill() {
+        System.out.println("Total Bill = Rs." + amount);
+    }
+}
+
+public class HospitalManagement {
+
+    public static <T> void show(T obj) {
+        System.out.println(obj);
+    }
+
+    public static void main(String args[]) {
+
+        Patient p1 = new Patient(101, "Aryan", "Fever");
+        Doctor d1 = new Doctor(201, "Dr. Sharma", "Cardiology");
+
+        p1.display();
+        d1.display();
+
+        try {
+            Bill b1 = new Bill(2500);
+            b1.generateBill();
+
+            FileWriter fw = new FileWriter("hospital.txt");
+            fw.write("Patient: Aryan Bill: 2500");
+            fw.close();
+
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+
+        show("Hospital Record Saved Successfully");
+    }
+}
